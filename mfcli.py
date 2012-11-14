@@ -3,7 +3,6 @@
 import os
 import urllib2
 import MediaFire
-from padnums import pprint_table
 import json
 import pdb
 import ConfigParser
@@ -93,8 +92,13 @@ def optValidator(val1, val2, fatal=None):
         print "[x] "+fatal
         exit()
     return None
-    
-        
+
+def ppdic(dic, spaces=1):
+    big = max([ len(str(x)) for x in dic])
+    for x in dic:
+        print x + ':' + (big-len(x)+spaces)*' '+dic[x]    
+
+
 parser = OptionParser()
 
 parser.add_option("-k", "--api-key", dest="API_KEY", action="store",
@@ -177,9 +181,9 @@ elif options.operation == "upload" :
 
 elif options.operation == "info" :
     if len(options.ident) == 13 : #Folder
-        print mfOps.getFolderInfo(options.ident)
+        ppdic(mfOps.getFolderInfo(options.ident), 6)
     else:
-        print mfOps.getFileInfo(options.ident)
+        ppdic(mfOps.getFileInfo(options.ident), 6)
     
     
     
