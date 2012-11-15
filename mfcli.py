@@ -72,16 +72,17 @@ class MediaFireOps:
 
     def getFileInfo(self, fileKey):
         self.mf_file = MediaFire.MediaFireFile(fileKey, user=self.auth_user)
-        #pp.pprint(self.mf_file.get_info())
-        fileInfos = self.mf_file.get_info()
-        del fileInfos['epoch']
-        del fileInfos['dropbox_enabled']
-        del fileInfos['avatar']
+        return self.mf_file.get_info()
         
     def getFolderInfo(self, folderKey):
         self.mf_folder = MediaFire.MediaFireFolder(folderKey, user=self.auth_user)
-        #pp.pprint(self.mf_folder.get_info())
-        return self.mf_folder.get_info()
+        return self.mf_folder.get_info
+        
+    def downloadFolder(self, folderKey=None, destFolder=None):
+        #download root files
+        for userFile in self.getFolderContient(folderKey):
+            self.auth_user.get_session_token(user, password)
+            self.downloadFile(userFile['quickkey'])
                 
 def optValidator(val1, val2, fatal=None):
     if val1:
@@ -169,9 +170,12 @@ if options.operation == "list":
         
 elif options.operation == "download" :
     if options.ident :
-        mfOps.downloadFile(options.ident, options.dest)
+        if len(options.ident) == 13 : #folder
+            mfOps.downloadFolder(options.ident, options.dest)
+        else:
+            mfOps.downloadFile(options.ident, options.dest)
     else:
-        print '[!] Must specifie file quick key'
+        print '[!] Must specifie file or folder key'
 
 elif options.operation == "upload" :
     if os.path.isfile(options.upFile):
