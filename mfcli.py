@@ -42,8 +42,10 @@ class MediaFireOps:
         try:
             url = self.mf_file.get_links()['links'][0]['direct_download']
         except:
-            print 'can not extract direct link'
-            exit()
+            print 'can not extract direct link for' #add file name
+            return
+            
+        print 'url :', url
         file_name = url.split('/')[-1]
         u = urllib2.urlopen(url)
         
