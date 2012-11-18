@@ -46,6 +46,9 @@ class MediaFireOps:
             return
             
         print 'url :', url
+        os.system('wget "'+url+'"')
+        return
+        #ToDo: using wget until fixing builtin downloader
         file_name = url.split('/')[-1]
         u = urllib2.urlopen(url)
         
